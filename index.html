@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>다현이의 영어 완전 정복 V15</title>
+    <title>다현이의 영어 완전 정복 V16</title>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #FFB300; --secondary: #6A5ACD; --bg: #F4F7FC; --text: #333; }
@@ -13,7 +13,7 @@
         /* 헤더 */
         .header-wrapper { position: sticky; top: 0; z-index: 100; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .top-bar { display: flex; justify-content: flex-end; padding: 10px 20px 0; }
-        .setting-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #555; font-family: 'Jua'; display: flex; align-items: center; gap: 5px; }
+        .setting-btn { background: none; border: none; font-size: 18px; cursor: pointer; color: #555; font-family: 'Jua'; display: flex; align-items: center; gap: 5px; background-color: #f0f0f0; padding: 5px 15px; border-radius: 20px;}
         
         /* 네비게이션 */
         .nav { display: grid; grid-template-columns: repeat(6, 1fr); padding: 0; margin-bottom: 20px; }
@@ -22,15 +22,16 @@
 
         .container { max-width: 600px; margin: 0 auto; padding: 10px 20px 80px 20px; }
         
-        /* Admin Modal */
+        /* Admin Modal (수정됨) */
         #admin-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: flex; align-items: center; justify-content: center; }
         .admin-box { background: white; width: 95%; max-width: 500px; padding: 20px; border-radius: 20px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .admin-box h3 { margin-top: 0; color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;}
-        .admin-box textarea { width: 100%; height: 250px; font-family: sans-serif; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; line-height: 1.6; resize: none; background: #fafafa; }
-        .admin-help { font-size: 14px; color: #555; background: #E3F2FD; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #2196F3; }
+        .admin-box textarea { width: 100%; height: 200px; font-family: sans-serif; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; line-height: 1.6; resize: none; background: #fafafa; white-space: pre; overflow-x: auto;}
+        
+        .admin-help { font-size: 14px; color: #444; background: #E3F2FD; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #2196F3; line-height: 1.5; }
         .admin-btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
         .save-btn { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;}
-        .close-btn { background: #999; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px;}
+        .close-btn { background: #90A4AE; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px;}
         .reset-btn { background: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-right: auto; font-size: 16px;}
 
         /* 공통 UI 및 게임 스타일 */
@@ -39,21 +40,21 @@
         .card-box { background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 30px; margin: 0 auto; min-height: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
         .emoji { font-size: 70px; margin-bottom: 15px; }
         .word-text { font-size: 40px; font-weight: bold; color: var(--secondary); }
-        .mean-text { font-size: 28px; color: #555; margin-top: 10px; text-align: center; word-break: keep-all; line-height: 1.3;} /* 뜻이 길어질 수 있으니 줄바꿈 처리 */
+        .mean-text { font-size: 28px; color: #555; margin-top: 10px; text-align: center; word-break: keep-all; line-height: 1.3;}
         .ctrl-btn { background: var(--secondary); color: white; border: none; padding: 12px 24px; border-radius: 50px; font-size: 18px; cursor: pointer; box-shadow: 0 4px 0 #483d8b; font-family: 'Jua', sans-serif; margin-top: 20px;}
         .ctrl-btn:active { transform: translateY(4px); box-shadow: none; }
         .hidden { display: none; }
         .end-screen { padding: 40px; }
 
-        /* 모드별 스타일 (압축) */
+        /* 각 모드별 스타일 (압축) */
         .scene { width: 100%; height: 320px; perspective: 1000px; margin-bottom: 20px; }
         .flashcard-obj { width: 100%; height: 100%; position: relative; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
-        .face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: center; align-items: center; background: white; padding: 20px;}
+        .face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: center; align-items: center; background: white; padding:20px; }
         .face.back { transform: rotateY(180deg); background-color: #fff8e1; border: 4px solid #FFD54F; }
         .flashcard-obj.flipped { transform: rotateY(180deg); }
         .controls { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 10px; }
         .options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; width: 100%; }
-        .option-btn { background: white; border: 3px solid #eee; padding: 15px 10px; border-radius: 15px; font-size: 18px; cursor: pointer; font-family: 'Jua', sans-serif; color: #555; box-shadow: 0 4px 0 #ddd; min-height: 80px; word-break: keep-all; line-height: 1.3; display:flex; align-items:center; justify-content:center;}
+        .option-btn { background: white; border: 3px solid #eee; padding: 15px 10px; border-radius: 15px; font-size: 18px; cursor: pointer; font-family: 'Jua', sans-serif; color: #555; box-shadow: 0 4px 0 #ddd; min-height:80px; display:flex; align-items:center; justify-content:center; line-height:1.2;}
         .option-btn.correct { background: #d4edda; border-color: #28a745; color: #155724; }
         .option-btn.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
         .match-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; }
@@ -62,10 +63,10 @@
         .match-card.selected { background-color: #e8eaf6; border: 3px solid var(--secondary); color: var(--secondary); transform: scale(1.02); }
         .match-card.matched { visibility: hidden; opacity: 0; }
         .hunter-board { width: 100%; height: 400px; background-color: #E3F2FD; border-radius: 20px; position: relative; overflow: hidden; border: 4px solid #90CAF9; margin-bottom: 20px; }
-        .bubble-word { position: absolute; background: white; border: 2px solid #BBDEFB; padding: 12px 18px; border-radius: 30px; font-size: 24px; font-weight: bold; color: #1565C0; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; white-space: nowrap;}
+        .bubble-word { position: absolute; background: white; border: 2px solid #BBDEFB; padding: 12px 18px; border-radius: 30px; font-size: 24px; font-weight: bold; color: #1565C0; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; white-space:nowrap; }
         .bubble-word:active { transform: scale(0.9); background: #BBDEFB; }
         .bubble-word.wrong { background: #FFCDD2; color: #D32F2F; border-color: #EF9A9A; animation: shake 0.3s; }
-        .target-hint-box { background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 2px solid #ddd; word-break: keep-all; line-height: 1.3;}
+        .target-hint-box { background: white; padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 2px solid #ddd; }
         .target-hint-text { font-size: 24px; font-weight: bold; color: #333; }
         .spelling-box { display: flex; gap: 8px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
         .spell-slot { width: 45px; height: 55px; border-bottom: 5px solid #ddd; font-size: 34px; font-weight: bold; color: #333; display: flex; align-items: center; justify-content: center; }
@@ -103,12 +104,12 @@
 
     <div class="container">
         <div id="flashcard-mode">
-            <div class="status-header"><span>학습 카드</span><span class="status-text" id="fc-progress">1 / 15</span></div>
+            <div class="status-header"><span>학습 카드</span><span class="status-text" id="fc-progress">1 / 16</span></div>
             <div class="scene"><div class="flashcard-obj" id="flashcard-obj" onclick="flipCard()"><div class="face front"><div class="emoji">❓</div><div class="word-text" id="fc-word">Word</div><div style="color:#999;font-size:16px;margin-top:15px;">(터치해서 뒤집기)</div></div><div class="face back"><div class="emoji" id="fc-emoji">🍎</div><div class="mean-text" id="fc-mean">뜻</div></div></div></div>
             <div class="controls"><button class="ctrl-btn" onclick="prevCard()">⬅️ 이전</button><button class="ctrl-btn" onclick="nextCard()">다음 ➡️</button></div>
         </div>
         <div id="quiz-mode" class="hidden">
-            <div id="quiz-game"><div class="status-header"><span id="quiz-mode-title">객관식 퀴즈</span><span class="status-text" id="quiz-progress">1 / 15</span></div><div class="card-box" style="min-height:180px;"><div class="emoji" id="q-emoji">🦒</div><div class="mean-text" id="q-question" style="font-size:32px;font-weight:bold;">기린</div></div><div class="options" id="q-options"></div></div>
+            <div id="quiz-game"><div class="status-header"><span id="quiz-mode-title">객관식 퀴즈</span><span class="status-text" id="quiz-progress">1 / 16</span></div><div class="card-box" style="min-height:180px;"><div class="emoji" id="q-emoji">🦒</div><div class="mean-text" id="q-question" style="font-size:32px;font-weight:bold;">기린</div></div><div class="options" id="q-options"></div></div>
             <div id="quiz-end" class="hidden end-screen"><div style="font-size:60px;">🎉</div><h2>퀴즈 완료!</h2><button class="ctrl-btn" onclick="initQuiz()">처음부터 다시</button></div>
         </div>
         <div id="match-mode" class="hidden">
@@ -118,14 +119,14 @@
         </div>
         <div id="hunter-mode" class="hidden">
             <div id="hunter-start"><div class="card-box"><div style="font-size:60px;">🔎</div><h3>진짜 단어 찾기</h3><button class="ctrl-btn" onclick="startHunterGame()">시작하기</button></div></div>
-            <div id="hunter-play" class="hidden"><div class="status-header"><span id="hunter-timer">⏳ 90s</span><span class="status-text" id="hunter-score">1 / 15</span></div><div class="target-hint-box"><div class="target-hint-text" id="hunter-hint">시계</div></div><div class="hunter-board" id="hunter-board"></div></div>
+            <div id="hunter-play" class="hidden"><div class="status-header"><span id="hunter-timer">⏳ 90s</span><span class="status-text" id="hunter-score">1 / 16</span></div><div class="target-hint-box"><div class="target-hint-text" id="hunter-hint">시계</div></div><div class="hunter-board" id="hunter-board"></div></div>
         </div>
         <div id="spelling-mode" class="hidden">
-            <div id="spell-game"><div class="status-header"><span id="spell-mode-title">빈칸 채우기</span><span class="status-text" id="spell-progress">1 / 15</span></div><div class="card-box"><div class="emoji" id="sp-emoji">⏰</div><div class="mean-text" id="sp-mean" style="margin-bottom:20px;">시계</div><div class="spelling-box" id="spell-slots"></div></div><div class="keyboard-area" id="keyboard-area"></div><div id="sp-feedback" style="margin-top:20px;font-weight:bold;font-size:20px;height:30px;color:#4CAF50;"></div><button class="ctrl-btn hidden" id="sp-next-btn" onclick="nextSpelling()">다음 문제 ➡️</button></div>
+            <div id="spell-game"><div class="status-header"><span id="spell-mode-title">빈칸 채우기</span><span class="status-text" id="spell-progress">1 / 16</span></div><div class="card-box"><div class="emoji" id="sp-emoji">⏰</div><div class="mean-text" id="sp-mean" style="margin-bottom:20px;">시계</div><div class="spelling-box" id="spell-slots"></div></div><div class="keyboard-area" id="keyboard-area"></div><div id="sp-feedback" style="margin-top:20px;font-weight:bold;font-size:20px;height:30px;color:#4CAF50;"></div><button class="ctrl-btn hidden" id="sp-next-btn" onclick="nextSpelling()">다음 문제 ➡️</button></div>
             <div id="spell-end" class="hidden end-screen"><div style="font-size:60px;">✍️</div><h2>빈칸 완료!</h2><button class="ctrl-btn" onclick="initSpelling()">처음부터 다시</button></div>
         </div>
         <div id="test-mode" class="hidden">
-            <div class="status-header"><span>듣고 받아쓰기</span><span class="status-text" id="test-progress">0 / 15 완료</span></div><div id="hint-display">번호를 눌러주세요!</div><div class="test-grid" id="test-board"></div>
+            <div class="status-header"><span>듣고 받아쓰기</span><span class="status-text" id="test-progress">0 / 16 완료</span></div><div id="hint-display">번호를 눌러주세요!</div><div class="test-grid" id="test-board"></div>
             <div class="controls" style="justify-content: center; gap: 10px;"><button class="ctrl-btn" style="background:#FFCA28;color:#333;box-shadow:0 4px 0 #C79100;" onclick="showRandomHint()">🧩 빈칸 힌트</button><button class="ctrl-btn" style="background:#90A4AE;box-shadow:0 4px 0 #546E7A;" onclick="toggleAnswers()">📝 정답지</button></div><div id="answer-sheet"></div>
         </div>
     </div>
@@ -134,11 +135,12 @@
         <div class="admin-box">
             <h3>⚙️ 단어장 설정</h3>
             <div class="admin-help">
-                <b>영어, 뜻</b> 순서로 입력하세요. (아이콘은 자동!)<br>
-                뜻이 여러 개면 쉼표(,)나 띄어쓰기로 그냥 쭉 쓰세요.<br><br>
-                예시:<br>
-                apple, 사과<br>
-                run, 달리다, 뛰다, 경영하다
+                <b>1. 영어 띄어쓰기 뜻</b> (가장 쉬움!)<br>
+                apple 사과<br>
+                in front of ~앞에<br><br>
+                <b>2. 영어, 뜻</b> (쉼표 사용)<br>
+                run, 달리다, 경영하다<br>
+                nail, 손톱 / 못<br>
             </div>
             <textarea id="word-input"></textarea>
             <div class="admin-btns">
@@ -150,27 +152,27 @@
     </div>
 
     <script>
-        // 랜덤 아이콘 (자동 배정용)
+        // 랜덤 아이콘
         const randomIcons = ["🌟","🍎","🐶","🐱","🚀","🌈","⚽","🎵","🎮","📚","💡","🍀","🍕","🚗","🎁","⏰","🌞","🌙","🎈","🧁","🌻","🤖","👻","🦖","🍩","👑","💎","🧸","🏆","🎨","🦁","🐼","🐯","🐷","🐸","🐙"];
 
-        // 이번 주 단어 15개 (기본값)
+        // ★ 이번 주 단어 16개 (보내주신 사진 기반 업데이트) ★
         const defaultData = [
-            { en: "Thursday", ko: "목요일" }, 
-            { en: "Saturday", ko: "토요일" }, 
-            { en: "connect", ko: "연결하다" }, 
-            { en: "need", ko: "필요하다" }, 
-            { en: "when", ko: "언제, ~할 때" }, 
-            { en: "Wednesday", ko: "수요일" }, 
-            { en: "fifth", ko: "다섯 번째의, 다섯 번째" }, 
-            { en: "third", ko: "세 번째의, 세 번째" }, 
-            { en: "for", ko: "~을 위해, ~동안" }, 
-            { en: "of", ko: "~의, ~중의" }, 
-            { en: "from", ko: "~부터, ~에서" }, 
-            { en: "feet", ko: "발들" }, 
-            { en: "nail", ko: "손톱, 못, 발톱" }, 
-            { en: "in front of", ko: "~앞에" }, 
-            { en: "behind", ko: "~의 뒤에" },
-            { en: "next to", ko: "~옆에" }
+            { en: "for", ko: "~을 위해, ~동안", icon: "🎁" },
+            { en: "of", ko: "~의, ~중의", icon: "🔗" },
+            { en: "from", ko: "~부터, ~에서", icon: "🛫" },
+            { en: "feet", ko: "발들", icon: "🦶" },
+            { en: "nail", ko: "손톱, 못, 발톱", icon: "💅" },
+            { en: "Thursday", ko: "목요일", icon: "📅" },
+            { en: "Saturday", ko: "토요일", icon: "🎈" },
+            { en: "connect", ko: "연결하다", icon: "🔗" },
+            { en: "in front of", ko: "~앞에", icon: "👉" },
+            { en: "behind", ko: "~의 뒤에", icon: "👈" },
+            { en: "next to", ko: "~옆에", icon: "👯" },
+            { en: "need", ko: "필요하다", icon: "🙏" },
+            { en: "when", ko: "언제, ~할 때", icon: "❓" },
+            { en: "Wednesday", ko: "수요일", icon: "🐪" },
+            { en: "fifth", ko: "다섯 번째의", icon: "5️⃣" },
+            { en: "third", ko: "세 번째의", icon: "3️⃣" }
         ];
 
         let vocabData = [];
@@ -182,19 +184,23 @@
             else { 
                 vocabData = defaultData.map(item => ({
                     ...item,
-                    icon: randomIcons[Math.floor(Math.random() * randomIcons.length)]
+                    // 아이콘이 없으면 랜덤 배정
+                    icon: item.icon || randomIcons[Math.floor(Math.random() * randomIcons.length)]
                 }));
             }
         }
 
-        /* --- Admin (똑똑한 입력기) --- */
+        /* --- Admin Functions (닫기 버튼 수리 & 스마트 파싱) --- */
         function openAdmin() {
             document.getElementById('admin-modal').classList.remove('hidden');
-            // 저장된 데이터를 텍스트로 변환 (영어, 뜻)
+            // 보여줄 때 형식 변환
             const text = vocabData.map(v => `${v.en}, ${v.ko}`).join('\n');
             document.getElementById('word-input').value = text;
         }
-        function closeAdmin() { document.getElementById('admin-modal').classList.add('hidden'); }
+
+        function closeAdmin() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
         
         function saveWords() {
             const text = document.getElementById('word-input').value;
@@ -202,34 +208,53 @@
             const newData = [];
             
             for (let line of lines) {
-                // 첫 번째 쉼표(,)를 찾음
-                const firstCommaIndex = line.indexOf(',');
+                line = line.trim();
+                if(!line) continue;
+
+                let en, ko;
+
+                // 1. 쉼표(,)가 있는지 확인
+                const commaIndex = line.indexOf(',');
                 
-                if (firstCommaIndex > -1) {
-                    // 쉼표 앞은 영어
-                    const en = line.substring(0, firstCommaIndex).trim();
-                    // 쉼표 뒤는 몽땅 뜻 (쉼표가 또 있어도 뜻으로 포함!)
-                    const ko = line.substring(firstCommaIndex + 1).trim();
-                    
-                    if (en && ko) {
-                        const icon = randomIcons[Math.floor(Math.random() * randomIcons.length)];
-                        newData.push({ en, ko, icon });
+                if (commaIndex > -1) {
+                    // 쉼표가 있으면 그걸로 나눔 (영어, 뜻1, 뜻2...)
+                    en = line.substring(0, commaIndex).trim();
+                    ko = line.substring(commaIndex + 1).trim();
+                } else {
+                    // 2. 쉼표가 없으면 '영어와 한글 사이의 경계'를 찾음 (스마트 파싱)
+                    // 예: "in front of ~앞에" -> "in front of" / "~앞에"
+                    // 로직: 영어나 공백, 특수문자로 시작하다가 -> 한글이나 낯선 문자가 나오면 뜻으로 간주
+                    // 간단히: 맨 마지막 공백을 기준으로 나눌 수도 있지만, 영어 숙어(in front of) 때문에 안됨.
+                    // 해결책: 정규식으로 '영어+공백' 덩어리와 '그 뒤 나머지'를 나눔
+                    const match = line.match(/^([a-zA-Z0-9\s-]+)\s+(.*)$/);
+                    if (match) {
+                        en = match[1].trim();
+                        ko = match[2].trim();
+                    } else {
+                        // 이것도 저것도 아니면 그냥 전체를 영어로? 아니면 스킵.
+                        // 예: "apple" (뜻 없음) -> 무시
+                        continue;
                     }
+                }
+
+                if (en && ko) {
+                    const icon = randomIcons[Math.floor(Math.random() * randomIcons.length)];
+                    newData.push({ en, ko, icon });
                 }
             }
 
             if (newData.length === 0) { 
-                alert("형식이 맞지 않아요. '영어, 뜻' 형태로 적어주세요."); 
+                alert("단어를 인식하지 못했어요.\n'영어 뜻' 또는 '영어, 뜻' 형식으로 적어주세요."); 
                 return; 
             }
 
             vocabData = newData;
             localStorage.setItem('myVocabData', JSON.stringify(vocabData));
-            alert("저장되었습니다!");
+            alert(`저장 완료! 총 ${newData.length}개 단어가 들어갔어요.`);
             location.reload();
         }
         
-        function resetToDefault() { if(confirm("초기화 할까요?")) { localStorage.removeItem('myVocabData'); location.reload(); } }
+        function resetToDefault() { if(confirm("처음 상태(기본 단어)로 되돌릴까요?")) { localStorage.removeItem('myVocabData'); location.reload(); } }
 
         /* --- Common Functions --- */
         function speak(t){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.85;window.speechSynthesis.speak(u);}
