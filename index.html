@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>다현이의 영어 완전 정복 V13 (OCR탑재)</title>
+    <title>다현이의 영어 완전 정복 V14</title>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
     <style>
         :root { --primary: #FFB300; --secondary: #6A5ACD; --bg: #F4F7FC; --text: #333; }
         * { box-sizing: border-box; }
@@ -14,7 +13,7 @@
         /* 헤더 */
         .header-wrapper { position: sticky; top: 0; z-index: 100; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .top-bar { display: flex; justify-content: flex-end; padding: 10px 20px 0; }
-        .setting-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 5px; font-family: 'Jua'; }
+        .setting-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: #555; font-family: 'Jua'; display: flex; align-items: center; gap: 5px; }
         
         /* 네비게이션 */
         .nav { display: grid; grid-template-columns: repeat(6, 1fr); padding: 0; margin-bottom: 20px; }
@@ -23,22 +22,18 @@
 
         .container { max-width: 600px; margin: 0 auto; padding: 10px 20px 80px 20px; }
         
-        /* Admin Modal (OCR 추가됨) */
+        /* Admin Modal */
         #admin-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: flex; align-items: center; justify-content: center; }
-        .admin-box { background: white; width: 95%; max-width: 500px; padding: 20px; border-radius: 20px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto; }
+        .admin-box { background: white; width: 95%; max-width: 500px; padding: 20px; border-radius: 20px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .admin-box h3 { margin-top: 0; color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px;}
-        .ocr-section { background: #E3F2FD; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center; border: 2px dashed #90CAF9; }
-        .ocr-btn { background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-family: 'Jua'; font-size: 16px; margin-top: 5px; }
-        #ocr-status { font-size: 14px; color: #1976D2; margin-top: 10px; min-height: 20px; }
-        
-        .admin-box textarea { width: 100%; height: 150px; font-family: sans-serif; padding: 10px; border: 2px solid #ddd; border-radius: 10px; font-size: 14px; line-height: 1.5; resize: none; }
-        .admin-help { font-size: 12px; color: #666; background: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
+        .admin-box textarea { width: 100%; height: 250px; font-family: sans-serif; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; line-height: 1.6; resize: none; background: #fafafa; }
+        .admin-help { font-size: 14px; color: #555; background: #E3F2FD; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #2196F3; }
         .admin-btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
-        .save-btn { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;}
-        .close-btn { background: #999; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
-        .reset-btn { background: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-right: auto;}
+        .save-btn { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;}
+        .close-btn { background: #999; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px;}
+        .reset-btn { background: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-right: auto; font-size: 16px;}
 
-        /* 공통 UI 및 게임 스타일 (기존 유지) */
+        /* 공통 UI 및 게임 스타일 */
         .status-header { display: flex; justify-content: space-between; align-items: center; background: #333; color: white; padding: 8px 20px; border-radius: 50px; margin-bottom: 20px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 5px rgba(0,0,0,0.1); }
         .status-text { color: #FFD54F; } 
         .card-box { background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); padding: 30px; margin: 0 auto; min-height: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
@@ -50,7 +45,7 @@
         .hidden { display: none; }
         .end-screen { padding: 40px; }
 
-        /* Scene, Options, Match, Hunter, Spelling, Test Styles (압축 유지) */
+        /* 모드별 스타일 (압축) */
         .scene { width: 100%; height: 320px; perspective: 1000px; margin-bottom: 20px; }
         .flashcard-obj { width: 100%; height: 100%; position: relative; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
         .face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: center; align-items: center; background: white; }
@@ -94,7 +89,7 @@
 
     <div class="header-wrapper">
         <div class="top-bar">
-            <button class="setting-btn" onclick="openAdmin()">⚙️ 단어장 관리 (사진입력)</button>
+            <button class="setting-btn" onclick="openAdmin()">⚙️ 단어장 만들기</button>
         </div>
         <div class="nav">
             <button class="nav-btn active" onclick="setMode('flashcard')">1.카드</button>
@@ -108,12 +103,12 @@
 
     <div class="container">
         <div id="flashcard-mode">
-            <div class="status-header"><span>학습 카드</span><span class="status-text" id="fc-progress">1 / 15</span></div>
+            <div class="status-header"><span>학습 카드</span><span class="status-text" id="fc-progress">1 / 16</span></div>
             <div class="scene"><div class="flashcard-obj" id="flashcard-obj" onclick="flipCard()"><div class="face front"><div class="emoji">❓</div><div class="word-text" id="fc-word">Word</div><div style="color:#999;font-size:16px;margin-top:15px;">(터치해서 뒤집기)</div></div><div class="face back"><div class="emoji" id="fc-emoji">🍎</div><div class="mean-text" id="fc-mean">뜻</div></div></div></div>
             <div class="controls"><button class="ctrl-btn" onclick="prevCard()">⬅️ 이전</button><button class="ctrl-btn" onclick="nextCard()">다음 ➡️</button></div>
         </div>
         <div id="quiz-mode" class="hidden">
-            <div id="quiz-game"><div class="status-header"><span id="quiz-mode-title">객관식 퀴즈</span><span class="status-text" id="quiz-progress">1 / 15</span></div><div class="card-box" style="min-height:180px;"><div class="emoji" id="q-emoji">🦒</div><div class="mean-text" id="q-question" style="font-size:32px;font-weight:bold;">기린</div></div><div class="options" id="q-options"></div></div>
+            <div id="quiz-game"><div class="status-header"><span id="quiz-mode-title">객관식 퀴즈</span><span class="status-text" id="quiz-progress">1 / 16</span></div><div class="card-box" style="min-height:180px;"><div class="emoji" id="q-emoji">🦒</div><div class="mean-text" id="q-question" style="font-size:32px;font-weight:bold;">기린</div></div><div class="options" id="q-options"></div></div>
             <div id="quiz-end" class="hidden end-screen"><div style="font-size:60px;">🎉</div><h2>퀴즈 완료!</h2><button class="ctrl-btn" onclick="initQuiz()">처음부터 다시</button></div>
         </div>
         <div id="match-mode" class="hidden">
@@ -123,14 +118,14 @@
         </div>
         <div id="hunter-mode" class="hidden">
             <div id="hunter-start"><div class="card-box"><div style="font-size:60px;">🔎</div><h3>진짜 단어 찾기</h3><button class="ctrl-btn" onclick="startHunterGame()">시작하기</button></div></div>
-            <div id="hunter-play" class="hidden"><div class="status-header"><span id="hunter-timer">⏳ 90s</span><span class="status-text" id="hunter-score">1 / 15</span></div><div class="target-hint-box"><div class="target-hint-text" id="hunter-hint">시계</div></div><div class="hunter-board" id="hunter-board"></div></div>
+            <div id="hunter-play" class="hidden"><div class="status-header"><span id="hunter-timer">⏳ 90s</span><span class="status-text" id="hunter-score">1 / 16</span></div><div class="target-hint-box"><div class="target-hint-text" id="hunter-hint">시계</div></div><div class="hunter-board" id="hunter-board"></div></div>
         </div>
         <div id="spelling-mode" class="hidden">
-            <div id="spell-game"><div class="status-header"><span id="spell-mode-title">빈칸 채우기</span><span class="status-text" id="spell-progress">1 / 15</span></div><div class="card-box"><div class="emoji" id="sp-emoji">⏰</div><div class="mean-text" id="sp-mean" style="margin-bottom:20px;">시계</div><div class="spelling-box" id="spell-slots"></div></div><div class="keyboard-area" id="keyboard-area"></div><div id="sp-feedback" style="margin-top:20px;font-weight:bold;font-size:20px;height:30px;color:#4CAF50;"></div><button class="ctrl-btn hidden" id="sp-next-btn" onclick="nextSpelling()">다음 문제 ➡️</button></div>
+            <div id="spell-game"><div class="status-header"><span id="spell-mode-title">빈칸 채우기</span><span class="status-text" id="spell-progress">1 / 16</span></div><div class="card-box"><div class="emoji" id="sp-emoji">⏰</div><div class="mean-text" id="sp-mean" style="margin-bottom:20px;">시계</div><div class="spelling-box" id="spell-slots"></div></div><div class="keyboard-area" id="keyboard-area"></div><div id="sp-feedback" style="margin-top:20px;font-weight:bold;font-size:20px;height:30px;color:#4CAF50;"></div><button class="ctrl-btn hidden" id="sp-next-btn" onclick="nextSpelling()">다음 문제 ➡️</button></div>
             <div id="spell-end" class="hidden end-screen"><div style="font-size:60px;">✍️</div><h2>빈칸 완료!</h2><button class="ctrl-btn" onclick="initSpelling()">처음부터 다시</button></div>
         </div>
         <div id="test-mode" class="hidden">
-            <div class="status-header"><span>듣고 받아쓰기</span><span class="status-text" id="test-progress">0 / 15 완료</span></div><div id="hint-display">번호를 눌러주세요!</div><div class="test-grid" id="test-board"></div>
+            <div class="status-header"><span>듣고 받아쓰기</span><span class="status-text" id="test-progress">0 / 16 완료</span></div><div id="hint-display">번호를 눌러주세요!</div><div class="test-grid" id="test-board"></div>
             <div class="controls" style="justify-content: center; gap: 10px;"><button class="ctrl-btn" style="background:#FFCA28;color:#333;box-shadow:0 4px 0 #C79100;" onclick="showRandomHint()">🧩 빈칸 힌트</button><button class="ctrl-btn" style="background:#90A4AE;box-shadow:0 4px 0 #546E7A;" onclick="toggleAnswers()">📝 정답지</button></div><div id="answer-sheet"></div>
         </div>
     </div>
@@ -138,17 +133,11 @@
     <div id="admin-modal" class="hidden">
         <div class="admin-box">
             <h3>⚙️ 단어장 설정</h3>
-            
-            <div class="ocr-section">
-                <div style="font-size:14px; color:#555; margin-bottom:5px;">📷 <b>단어장 사진을 찍으면 자동 입력!</b></div>
-                <input type="file" id="ocr-input" accept="image/*" style="display:none;" onchange="processImage(this)">
-                <button class="ocr-btn" onclick="document.getElementById('ocr-input').click()">사진 불러오기</button>
-                <div id="ocr-status"></div>
-            </div>
-
             <div class="admin-help">
-                직접 입력: <b>영어, 한글, 이모티콘</b> (엔터로 줄바꿈)<br>
-                예: apple, 사과, 🍎
+                <b>영어, 뜻</b> 순서로 입력하세요. (아이콘은 자동!)<br>
+                예:<br>
+                apple, 사과<br>
+                connect, 연결하다
             </div>
             <textarea id="word-input"></textarea>
             <div class="admin-btns">
@@ -160,13 +149,27 @@
     </div>
 
     <script>
-        // 기본 데이터
+        // 랜덤 아이콘 목록 (입력 안 했을 때 자동 부여용)
+        const randomIcons = ["🌟","🍎","🐶","🐱","🚀","🌈","⚽","🎵","🎮","📚","💡","🍀","🍕","🚗","🎁","⏰","🌞","🌙","🎈","🧁","🌻","🤖","👻","🦖","🍩","👑","💎","🧸","🏆","🎨"];
+
+        // 이번 주 단어 15개 (아빠가 주신 리스트)
         const defaultData = [
-            { en: "circle", ko: "원", icon: "🟣" }, { en: "kitchen", ko: "주방", icon: "🧑‍🍳" }, { en: "thirteen", ko: "13 (열셋)", icon: "1️⃣3️⃣" },
-            { en: "breakfast", ko: "아침식사", icon: "🥣" }, { en: "figure", ko: "숫자/인물", icon: "🔢" }, { en: "connect", ko: "연결하다", icon: "🔗" },
-            { en: "leaf", ko: "잎", icon: "🍃" }, { en: "spot", ko: "장소, 점", icon: "📍" }, { en: "letter", ko: "편지, 글자", icon: "✉️" },
-            { en: "horn", ko: "뿔", icon: "🦌" }, { en: "hold", ko: "잡다", icon: "🤲" }, { en: "fourteen", ko: "14 (열넷)", icon: "1️⃣4️⃣" },
-            { en: "forty", ko: "40 (마흔)", icon: "4️⃣0️⃣" }, { en: "lip", ko: "입술", icon: "👄" }, { en: "nail", ko: "손톱, 못", icon: "💅" }
+            { en: "Thursday", ko: "목요일" }, 
+            { en: "Saturday", ko: "토요일" }, 
+            { en: "connect", ko: "연결하다" }, 
+            { en: "need", ko: "필요하다" }, 
+            { en: "when", ko: "언제, ~할 때" }, 
+            { en: "Wednesday", ko: "수요일" }, 
+            { en: "fifth", ko: "다섯 번째의" }, 
+            { en: "third", ko: "세 번째의" }, 
+            { en: "for", ko: "~을 위해, ~동안" }, 
+            { en: "of", ko: "~의, ~중의" }, 
+            { en: "from", ko: "~부터, ~에서" }, 
+            { en: "feet", ko: "발들" }, 
+            { en: "nail", ko: "손톱, 못" }, 
+            { en: "in front of", ko: "~앞에" }, 
+            { en: "behind", ko: "~의 뒤에" },
+            { en: "next to", ko: "~옆에" }
         ];
 
         let vocabData = [];
@@ -174,74 +177,59 @@
 
         function loadData() {
             const saved = localStorage.getItem('myVocabData');
-            if (saved) { vocabData = JSON.parse(saved); } else { vocabData = JSON.parse(JSON.stringify(defaultData)); }
-        }
-
-        /* --- OCR Logic (Tesseract.js) --- */
-        function processImage(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const status = document.getElementById('ocr-status');
-            status.innerText = "⏳ 글자를 읽고 있어요... (잠시만요!)";
-            
-            Tesseract.recognize(
-                file,
-                'eng+kor', // 영어+한글 인식
-                { logger: m => console.log(m) }
-            ).then(({ data: { text } }) => {
-                status.innerText = "✅ 완료! 아래 내용을 확인하고 수정하세요.";
-                
-                // 간단한 파싱 (줄바꿈 정리 및 '영어 한글' 패턴 찾기 시도)
-                // 완벽하지 않으므로 사용자가 수정해야 함을 전제로 함
-                const cleanedText = text.split('\n')
-                    .map(line => line.trim())
-                    .filter(line => line.length > 0)
-                    .map(line => {
-                        // 공백을 콤마로 바꾸는 단순 시도 (사용자가 수정하기 편하게)
-                        // 예: "apple 사과" -> "apple, 사과"
-                        return line.replace(/([a-zA-Z]+)\s+([가-힣]+)/, "$1, $2");
-                    })
-                    .join('\n');
-
-                const currentVal = document.getElementById('word-input').value;
-                document.getElementById('word-input').value = currentVal + (currentVal ? "\n" : "") + cleanedText;
-            }).catch(err => {
-                status.innerText = "❌ 오류가 발생했어요. 다시 시도해주세요.";
-                console.error(err);
-            });
+            if (saved) { vocabData = JSON.parse(saved); } 
+            else { 
+                // 초기 데이터에 랜덤 아이콘 붙여서 로드
+                vocabData = defaultData.map(item => ({
+                    ...item,
+                    icon: randomIcons[Math.floor(Math.random() * randomIcons.length)]
+                }));
+            }
         }
 
         /* --- Admin --- */
         function openAdmin() {
             document.getElementById('admin-modal').classList.remove('hidden');
-            const text = vocabData.map(v => `${v.en}, ${v.ko}, ${v.icon}`).join('\n');
+            // 보여줄 때는 '영어, 뜻' 만 보여줌 (아이콘은 내부적 처리)
+            const text = vocabData.map(v => `${v.en}, ${v.ko}`).join('\n');
             document.getElementById('word-input').value = text;
-            document.getElementById('ocr-status').innerText = "";
         }
         function closeAdmin() { document.getElementById('admin-modal').classList.add('hidden'); }
+        
         function saveWords() {
             const text = document.getElementById('word-input').value;
             const lines = text.split('\n');
             const newData = [];
+            
             for (let line of lines) {
-                const parts = line.split(','); // 콤마 구분
+                // 콤마(,)로 구분하되, 앞뒤 공백 제거
+                const parts = line.split(',');
                 if (parts.length >= 2) {
                     const en = parts[0].trim();
                     const ko = parts[1].trim();
-                    const icon = parts[2] ? parts[2].trim() : '✨';
-                    if (en && ko) newData.push({ en, ko, icon });
+                    
+                    if (en && ko) {
+                        // 아이콘은 랜덤 배정!
+                        const icon = randomIcons[Math.floor(Math.random() * randomIcons.length)];
+                        newData.push({ en, ko, icon });
+                    }
                 }
             }
-            if (newData.length === 0) { alert("입력 형식을 확인해주세요.\n예: apple, 사과"); return; }
+
+            if (newData.length === 0) { 
+                alert("단어가 없거나 형식이 틀렸어요.\n예: apple, 사과"); 
+                return; 
+            }
+
             vocabData = newData;
             localStorage.setItem('myVocabData', JSON.stringify(vocabData));
-            alert("저장되었습니다! 앱이 새로고침됩니다.");
+            alert("저장되었습니다! (아이콘은 제가 예쁜 걸로 골랐어요 😉)");
             location.reload();
         }
+        
         function resetToDefault() { if(confirm("처음 상태로 되돌릴까요?")) { localStorage.removeItem('myVocabData'); location.reload(); } }
 
-        /* --- Common Functions (TTS, Nav) --- */
+        /* --- Common Functions --- */
         function speak(t){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=0.85;window.speechSynthesis.speak(u);}
         function setMode(m){
             document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); event.target.classList.add('active');
@@ -250,13 +238,11 @@
             if(m==='flashcard'){fcIndex=0;updateFlashcard();} if(m==='quiz')initQuiz(); if(m==='match')initMatch(); if(m==='hunter')resetHunterUI(); if(m==='spelling')initSpelling(); if(m==='test')initTest();
         }
 
-        /* --- Game Logics (Minified for Stability) --- */
-        // 1. Flashcard
+        /* --- Game Logics (Minified) --- */
         let fcIndex=0;
         function updateFlashcard(){if(vocabData.length===0)return; const item=vocabData[fcIndex]; document.getElementById('flashcard-obj').classList.remove('flipped'); setTimeout(()=>{document.getElementById('fc-word').innerText=item.en;document.getElementById('fc-mean').innerText=item.ko;document.getElementById('fc-emoji').innerText=item.icon;document.getElementById('fc-progress').innerText=`${fcIndex+1} / ${vocabData.length}`;speak(item.en);},200);}
         function flipCard(){document.getElementById('flashcard-obj').classList.toggle('flipped');} function nextCard(){if(fcIndex<vocabData.length-1){fcIndex++;updateFlashcard();}} function prevCard(){if(fcIndex>0){fcIndex--;updateFlashcard();}}
 
-        // 2. Quiz
         let quizQueue=[],quizWrong=[],quizCurrentItem=null,quizTotal=0;
         function initQuiz(){quizQueue=vocabData.slice().sort(()=>Math.random()-0.5);quizWrong=[];quizTotal=vocabData.length;document.getElementById('quiz-game').classList.remove('hidden');document.getElementById('quiz-end').classList.add('hidden');document.getElementById('quiz-mode-title').innerText="객관식 퀴즈";nextQuiz();}
         function nextQuiz(){
@@ -267,7 +253,6 @@
             ops.forEach(o=>{const b=document.createElement('button');b.className='option-btn';b.innerText=o.en;b.onclick=()=>{if(o.en===quizCurrentItem.en){b.classList.add('correct');speak("Correct!");setTimeout(nextQuiz,1000);}else{b.classList.add('wrong');speak("Oh no");if(!quizWrong.includes(quizCurrentItem))quizWrong.push(quizCurrentItem);}};div.appendChild(b);});
         }
 
-        // 3. Match
         let matchTimer,matchTime,matchSelected,matchFound;
         function initMatch(){clearInterval(matchTimer);document.getElementById('match-start').classList.remove('hidden');document.getElementById('match-game').classList.add('hidden');document.getElementById('match-end').classList.add('hidden');}
         function startMatchGame(){
@@ -282,7 +267,6 @@
         }
         function endMatchGame(s){clearInterval(matchTimer);document.getElementById('match-game').classList.add('hidden');document.getElementById('match-end').classList.remove('hidden');if(s){document.getElementById('match-end-icon').innerText="🎉";document.getElementById('match-end-title').innerText="성공!";}else{document.getElementById('match-end-icon').innerText="⏰";document.getElementById('match-end-title').innerText="시간 초과!";}}
 
-        // 4. Hunter
         let hunterTimer,hunterTime,hunterQList,hunterIdx;
         function resetHunterUI(){clearInterval(hunterTimer);document.getElementById('hunter-start').classList.remove('hidden');document.getElementById('hunter-play').classList.add('hidden');}
         function startHunterGame(){document.getElementById('hunter-start').classList.add('hidden');document.getElementById('hunter-play').classList.remove('hidden');hunterQList=vocabData.slice().sort(()=>Math.random()-0.5);hunterIdx=0;hunterTime=90;nextHunterQ();hunterTimer=setInterval(()=>{hunterTime--;document.getElementById('hunter-timer').innerText=`⏳ ${hunterTime}s`;if(hunterTime<=0){clearInterval(hunterTimer);alert("시간 종료!");resetHunterUI();}},1000);}
@@ -295,7 +279,6 @@
             all.forEach(txt=>{ const el=document.createElement('div'); el.className='bubble-word'; el.innerText=txt; el.style.top=(10+Math.random()*70)+"%"; el.style.left=(5+Math.random()*65)+"%"; el.onclick=()=>{ if(txt===cur.en){ speak("Correct!"); hunterIdx++; nextHunterQ(); } else { speak("No"); el.classList.add('wrong'); } }; board.appendChild(el); });
         }
 
-        // 5. Spelling
         let spellQueue=[],spellWrong=[],spellCurrentItem=null,spellTotal=0,spellTarget="";
         function initSpelling(){spellQueue=vocabData.slice().sort(()=>Math.random()-0.5);spellWrong=[];spellTotal=vocabData.length;document.getElementById('spell-game').classList.remove('hidden');document.getElementById('spell-end').classList.add('hidden');document.getElementById('spell-mode-title').innerText="빈칸 채우기";nextSpelling();}
         function nextSpelling(){
@@ -307,7 +290,6 @@
             keys.forEach(k=>{const b=document.createElement('button');b.className='key-btn';b.innerText=k;b.onclick=()=>{const slots=document.querySelectorAll('.spell-slot.empty');if(slots.length===0)return;const t=slots[0];if(t.dataset.answer===k){t.innerText=k;t.classList.remove('empty');t.classList.add('filled');b.classList.add('used');speak(k);if(document.querySelectorAll('.spell-slot.empty').length===0){document.getElementById('sp-feedback').innerText="Perfect!";speak(spellTarget);document.getElementById('sp-next-btn').classList.remove('hidden');}}else{document.getElementById('sp-feedback').innerText="Try again!";b.classList.add('wrong');if(!spellWrong.includes(spellCurrentItem))spellWrong.push(spellCurrentItem);setTimeout(()=>{document.getElementById('sp-feedback').innerText="";b.classList.remove('wrong');},1000);}};ka.appendChild(b);});
         }
 
-        // 6. Test
         let testWord="",testCount=0;
         function initTest(){testWord="";testCount=0;document.getElementById('test-progress').innerText=`0 / ${vocabData.length} 완료`;const b=document.getElementById('test-board');const s=document.getElementById('answer-sheet');b.innerHTML='';s.innerHTML='';s.style.display='none';vocabData.forEach((i,idx)=>{const btn=document.createElement('button');btn.className='num-btn';btn.innerText=idx+1;btn.onclick=()=>playTestWord(i.en,btn);b.appendChild(btn);const a=document.createElement('div');a.innerText=`${idx+1}. ${i.en} (${i.ko})`;s.appendChild(a);});}
         function playTestWord(w,b){testWord=w;document.querySelectorAll('.num-btn').forEach(btn=>btn.classList.remove('playing'));b.classList.add('playing');const h=document.getElementById('hint-display');h.innerText="👂 듣는 중...";h.style.color="#0277bd";h.style.letterSpacing="0";window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=0.8;u.onend=()=>{h.innerText="받아 적으세요!";h.style.color="#333";b.classList.remove('playing');if(!b.classList.contains('done')){b.classList.add('done');testCount++;document.getElementById('test-progress').innerText=`${testCount} / ${vocabData.length} 완료`;}};window.speechSynthesis.speak(u);}
